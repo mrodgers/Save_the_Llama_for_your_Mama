@@ -10,7 +10,14 @@ Start by cloning the repository from GitHub to have a local copy on your machine
 git clone https://github.com/mrodgers/Save_the_Llama_for_your_Mama.git
 ```
 
-### 2. Install Dependencies
+### 2. Run the Installation Script
+Before installing the dependencies, run the installation script to set up necessary files and configurations:
+```sh
+sh install.sh
+```
+This script will guide you through the process of setting up the necessary files and directories including placing `index.html` in the templates directory and updating the `chainlit.md` file. Please ensure to follow the instructions that appear during the script execution carefully.
+
+### 3. Install Dependencies
 Navigate to the project directory and install the necessary dependencies using:
 ```sh
 pip install -r requirements.txt
