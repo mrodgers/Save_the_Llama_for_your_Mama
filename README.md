@@ -1,67 +1,78 @@
-# CopyBot File Upload Application
+# CopyBot Private Chatbot Project
 
-## Introduction
+## Overview
+The Chatbot project is a powerful chatbot system designed to provide answers along with source references by parsing through personal data. It leverages technologies like Chainlit for hosting and uses the Llama2 model to operate efficiently on a CPU (not an even more expensive GPU). This guide will walk you through setting up and running the project on your local machine.
 
-Welcome to the CopyBot File Upload Application. This application allows users to upload PDF files to the CopyBot server and subsequently process these files to extract embeddings and store vectors. This README provides an overview of the application and guidelines on how to use and contribute to it.
-
-## Features
-
-1. **PDF File Upload**: Users can upload PDF files to the server with a size limit of 16MB.
-2. **File Processing**: Processes the uploaded PDF files to extract embeddings and vector storage.
-3. **Dark/Light Theme Switcher**: Users can toggle between dark and light themes to enhance visual comfort.
-4. **Server File Listing**: Displays a list of files currently stored on the server.
+## Prerequisites
+- Operating System: Ubuntu (known to work)
+- Python: Version 3.10 or above
+- RAM: Minimum 16GB (8GB might fail after a few queries)
+- Hard Disk Space: Minimum 7GB for the llama model, additional space for your data
 
 ## Installation
 
-Clone the repository and navigate to the project directory. Use the following command to install all necessary dependencies (if any):
+### Step 1: Set up Project Directory
+Create a folder named `llama2_project` and download the llama2 model into it. The model can be downloaded from the provided link in the original guide.
 
-```bash
-# Please add necessary commands for your project setup here.
+### Step 2: Install Necessary Packages
+Create a file named `requirements.txt` and list the following libraries in it:
+
+```plaintext
+pypdf
+langchain
+torch
+accelerate
+bitsandbytes
+transformers
+sentence_transformers
+faiss_cpu
+chainlit
+ctransformers
+flask
 ```
 
-## Usage
-
-Run this uploader alongside of the Chainlit private file(s) chatbot (copybot) - which runs on port 8000, this will run on port 5000...
-Also, remember if you're running this in cloud infrastruture to remmeber firewall configs, they burn time if you forget!
-
-To run the application, use the following command in your terminal:
-
-```bash
-python3 fileupload.py
+Install the packages using the following command:
+```sh
+pip install -r requirements.txt
 ```
 
-1. Open the application in your web browser.
-2. Use the file upload tool to upload your PDF files to the CopyBot server.
-3. Click on "Process Embeddings and Vector Storage" to initiate the file processing.
-4. View the list of files available on the server in the "CopyBot Server File Listing" section.
-5. Use the "Switch Theme" button to toggle between dark and light themes.
+## Data Processing and Web Application Setup
+In this step, we will set up a Flask web application to handle file uploads and data processing. The application utilizes several modules from the langchain package for data processing.
 
-## Contribution
+Here is a breakdown of the Flask application code structure:
 
-Contributions are welcome! Please read the [contribution guidelines](CONTRIBUTING.md) to get started.
+### File Upload and Data Processing Script
+Save the following code to a file named `fileupload.py`. This script configures a Flask web application with routes to facilitate PDF file uploads and initiate data processing to create a vector database.
+
+```python
+# Few parts harvested from a blog post on Medium, thank you to...
+# ...[the rest of your code here]...
+```
+
+### Running the Flask Application
+Navigate to the directory containing the `fileupload.py` file in the terminal and initiate the Flask server with the command:
+
+```sh
+python fileupload.py
+```
+
+The application will start and be accessible at `http://0.0.0.0:5000`. You can upload PDF files via the upload route and initiate data processing through the process route.
+
+## Deploying the Model
+[...the rest of the instructions here...]
+
+## Contributors
+- Eduardo Alvarez (Title Rectification)
+- AI Anytime (Video Tutorial)
+
+## Additional Resources
+For a detailed walkthrough and further explanations, refer to the AI Anytime video tutorial mentioned in the main guide.
 
 ## License
+[Specify the License type here, if any]
 
-This project is licensed under the [MIT License](LICENSE.md).
-
-## Support
-
-For any queries or support, please contact [support@copybot.com](mailto:support@copybot.com).
-
-## Acknowledgements
-
-We would like to thank the following organizations and projects:
-
-- (List any third-party APIs, libraries, or frameworks used in your project here.)
-
+## Contact
+[Your Contact Information Here]
 ```
 
-## Changelog
-
-Refer to the [Changelog](CHANGELOG.md) for a detailed history of the project.
-
-## FAQ
-
-Visit the [FAQ section](FAQ.md) for answers to common questions.
-
----
+Make sure to complete the section labeled "[...the rest of the instructions here...]" with further instructions on deploying the model, as present in your original guide.
