@@ -1,5 +1,29 @@
 #!/bin/bash
 
+# Function to get the PID of running processes
+get_pids() {
+    CHAINLIT_PID=$(pgrep -f "chainlit run deploy.py -w")
+    FILEUPLOAD_PID=$(pgrep -f "python3 fileupload.py")
+}
+
+# Function to kill running processes
+kill_processes() {
+    if [ ! -z "$CHAINLIT_PID" ]; then
+        kill $CHAINLIT_PID
+        echo "Stopped running chainlit process (PID: $CHAINLIT_PID)"
+    fi
+    if [ ! -z "$FILEUPLOAD_PID" ]; then
+        kill $FILEUPLOAD_PID
+        echo "Stopped running fileupload.py process (PID: $FILEUPLOAD_PID)"
+    fi
+}
+
+# Get the PIDs of any running processes
+get_pids
+
+# If either process is running, stop them
+kill_processes
+
 # Check if "chainlit" command is available
 if ! command -v chainlit &> /dev/null
 then
