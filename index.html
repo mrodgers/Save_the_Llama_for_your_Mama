@@ -6,16 +6,33 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono&display=swap" rel="stylesheet">
   
   <style>
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Space Mono', monospace;
       margin: 0;
+      background-color: #f5f6f7;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
     }
 
     .root {
       padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      width: 70%;
+      max-width: 500px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
     }
 
     .message {
@@ -27,12 +44,45 @@
     }
 
     .form-group label {
-      display: block; 
+      display: block;
       margin-bottom: 5px;
     }
 
-    .mb-20 {
-      margin-bottom: 20px;
+    input[type="text"], input[type="file"], input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      font-family: 'Space Mono', monospace;
+    }
+
+    input[type="submit"] {
+      background-color: #0084FF;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #006bb5;
+    }
+
+    .message-div {
+      margin-top: 20px;
+      font-size: 16px;
+    }
+
+    .theme-switcher {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background-color: #fff;
+      border: none;
+      padding: 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
     .file-list {
@@ -40,14 +90,8 @@
       padding: 0;
     }
 
-    .theme-switcher {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-    }
-
-    .message-div {
-      margin-top: 20px;
+    .file-list li {
+      padding: 5px 0;
     }
   </style>
   
@@ -128,8 +172,7 @@
 </head>
 <body>
   <div id="root" class="root">
-    <h2>Welcome to the CopyBot File Upload</h2>
-
+    <h2>CopyBot File Upload</h2>
     <p>Please use the tool below to upload your PDF files to the CopyBot server.</p>
     <p class="mb-20">Make sure that the file is in PDF format and does not exceed the size limit of 16 MB.</p>
 
@@ -161,14 +204,14 @@
       <input type="submit" value="Process Embeddings and Vector Storage">
     </form>
 
-    <div>
-      <h3>CopyBot Server File Listing</h3>
-      <ul class="file-list">
-        {% for file in files %}
-          <li>{{ file }}</li>
-        {% endfor %}
-      </ul>
-    </div>
-  </div>
+<div>
+  <h3>CopyBot Server File Listing</h3>
+  <ul class="file-list">
+    {% for file in files %}
+      <li>{{ file }}</li>
+    {% endfor %}
+  </ul>
+</div>
+</div>
 </body>
 </html>
