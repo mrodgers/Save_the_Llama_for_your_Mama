@@ -1,4 +1,6 @@
-#Originally taken from a blog post https://medium.com/python-in-plain-english/super-quick-fine-tuning-llama-2-0-on-cpu-with-personal-data-d2d284559f
+#Originally based on code from a blog post https://medium.com/python-in-plain-english/super-quick-fine-tuning-llama-2-0-on-cpu-with-personal-data-d2d284559f
+#blog was from Ashhadul Islam
+
 from langchain import PromptTemplate
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
@@ -9,7 +11,10 @@ import chainlit as cl
 DB_FAISS_PATH = "vectorstores/db_faiss/"
 
 custom_prompt_template='''
-Please carefully utilize the following details to provide a precise response to the user's query. It's critical to maintain the confidentiality of the data and to provide information that is both safe and accurate. If the answer is not within the data presented, kindly acknowledge that the information is not available instead of speculating.
+Please carefully utilize the following details to provide a precise response to the user's query. 
+
+It is critical to provide information that is accurate. If the answer is not within the data presented, 
+kindly acknowledge that the information is not available instead of speculating.
 
 [Context]
 Provided context: {context}
@@ -17,9 +22,9 @@ Provided context: {context}
 [Question]
 User's query: {question}
 
-Respond responsibly and directly in the space provided below. Ensure to relay only the pertinent answer without any additional information.
+Ensure to relay only the pertinent answer without any additional information.
 
-[Confidential Response]
+[System Response]
 '''
 
 def set_custom_prompt():
