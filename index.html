@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+    }
+
+    .root {
+      padding: 20px;
+    }
+
+    .message {
+      color: green;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    .form-group label {
+      display: block; 
+      margin-bottom: 5px;
+    }
+
+    .mb-20 {
+      margin-bottom: 20px;
+    }
+
+    .file-list {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .theme-switcher {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+    }
+
+    .message-div {
+      margin-top: 20px;
+    }
+  </style>
+  
+  <script>
+    window.theme = {
+      "light": {
+        "primary": {
+          "main": "#000",
+          "light": "#3e3e3e",
+          "dark": "#1c1c1c"
+        },
+        "background": "#fff",
+        "paper": "#f0f0f0"
+      },
+      "dark": {
+        "primary": {
+          "main": "#fff",
+          "light": "#b3b3b3",
+          "dark": "#4d4d4d"
+        },
+        "background": "#2c2c2c",
+        "paper": "#1c1c1c"
+      }
+    };
+
+    document.addEventListener("DOMContentLoaded", function() {
+      let currentTheme = 'light';
+
+      const switchTheme = () => {
+        const themeSettings = window.theme[currentTheme];
+        document.body.style.backgroundColor = themeSettings.background;
+        document.body.style.color = themeSettings.primary.main;
+        currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+      };
+
+      const themeSwitcherButton = document.createElement('button');
+      themeSwitcherButton.className = 'theme-switcher';
+      themeSwitcherButton.innerText = 'Switch Theme';
+      themeSwitcherButton.addEventListener('click', switchTheme);
+      document.body.appendChild(themeSwitcherButton);
+
+      const processForm = document.querySelector('form[action="/process"]');
+      const processButton = processForm.querySelector('input[type="submit"]');
+      const messageContainer = document.createElement('div');
+      messageContainer.className = 'message-div';
+      document.body.appendChild(messageContainer);
+
+      processForm.addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        try {
+          processButton.style.backgroundColor = 'orange';
+          processButton.value = 'Processing...';
+
+          const response = await fetch('/process', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ data: 'future' })
+          });
+
+          const responseData = await response.json();
+
+          messageContainer.innerText = responseData.message;
+          messageContainer.style.color = responseData.success ? 'green' : 'red';
+          
+        } catch (error) {
+          console.error('Error:', error);
+          messageContainer.innerText = "An unexpected error occurred.";
+          messageContainer.style.color = 'red';
+          
+        } finally {
+          processButton.style.backgroundColor = '';
+          processButton.value = 'Process Embeddings and Vector Storage';
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+  <div id="root" class="root">
+    <h2>Welcome to the CopyBot File Upload</h2>
+    <p>Please use the tool below to upload your PDF files to the CopyBot server.</p>
+    <p class="mb-20">Make sure that the file is in PDF format and does not exceed the size limit of 16 MB.</p>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="message">
+          {% for message in messages %}
+            <p>{{ message }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    
+    <form action="/upload" method="post" enctype="multipart/form-data" class="mb-20">
+      <div class="form-group">
+        <label for="file">Select a PDF file:</label>
+        <input type="file" name="file" id="file" accept=".pdf">
+      </div>
+      <input type="submit" value="Upload">
+    </form>
+
+    <form action="/process" method="post" enctype="multipart/form-data" class="mb-20">
+        <input type="submit" value="Process Embeddings and Vector Storage">
+    </form>
+
+    <div>
+      <h3>CopyBot Server File Listing</h3>
+      <ul class="file-list">
+        {% for file in files %}
+          <li>{{ file }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
