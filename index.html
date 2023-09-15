@@ -99,27 +99,25 @@
         event.preventDefault();
 
         try {
+          const apikey = processForm.querySelector('input[name="api_key"]').value; // Get the value of the API key input
           processButton.style.backgroundColor = 'orange';
           processButton.value = 'Processing...';
 
+          const formData = new FormData(processForm);
+
           const response = await fetch('/process', {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ data: 'future' })
+            body: formData
           });
 
           const responseData = await response.json();
 
           messageContainer.innerText = responseData.message;
           messageContainer.style.color = responseData.success ? 'green' : 'red';
-          
         } catch (error) {
           console.error('Error:', error);
           messageContainer.innerText = "An unexpected error occurred.";
           messageContainer.style.color = 'red';
-          
         } finally {
           processButton.style.backgroundColor = '';
           processButton.value = 'Process Embeddings and Vector Storage';
@@ -131,6 +129,7 @@
 <body>
   <div id="root" class="root">
     <h2>Welcome to the CopyBot File Upload</h2>
+
     <p>Please use the tool below to upload your PDF files to the CopyBot server.</p>
     <p class="mb-20">Make sure that the file is in PDF format and does not exceed the size limit of 16 MB.</p>
 
@@ -143,17 +142,23 @@
         </div>
       {% endif %}
     {% endwith %}
-    
+
     <form action="/upload" method="post" enctype="multipart/form-data" class="mb-20">
+      <label for="upload_api_key">Upload Key:</label>
+      <input type="text" id="upload_api_key" name="api_key">
       <div class="form-group">
         <label for="file">Select a PDF file:</label>
         <input type="file" name="file" id="file" accept=".pdf">
       </div>
       <input type="submit" value="Upload">
     </form>
-
+    
+    After uploading to the directory, you'll need to process the embeddings and put that data into the vector store. Push the button below to do this.
     <form action="/process" method="post" enctype="multipart/form-data" class="mb-20">
-        <input type="submit" value="Process Embeddings and Vector Storage">
+      <label for="process_api_key">Process Key:</label>
+      <input type="text" id="process_api_key" name="api_key">
+      <br>
+      <input type="submit" value="Process Embeddings and Vector Storage">
     </form>
 
     <div>
