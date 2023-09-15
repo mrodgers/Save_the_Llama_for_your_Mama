@@ -1,78 +1,38 @@
-# CopyBot Private Chatbot Project
+# Welcome to CopyBot: Private Chats with Your Private Docs
 
-## Overview
-The Chatbot project is a powerful chatbot system designed to provide answers along with source references by parsing through personal data. It leverages technologies like Chainlit for hosting and uses the Llama2 model to operate efficiently on a CPU (not an even more expensive GPU). This guide will walk you through setting up and running the project on your local machine.
+Hello! Welcome to the **CopyBot** experience, your new personal file assistant that revolutionizes how you interact with your files through intuitive chat features. Find the project on GitHub at [Save the Llama for your Mama](https://github.com/mrodgers/Save_the_Llama_for_your_Mama/).
 
-## Prerequisites
-- Operating System: Ubuntu (known to work)
-- Python: Version 3.10 or above
-- RAM: Minimum 16GB (8GB might fail after a few queries)
-- Hard Disk Space: Minimum 7GB for the llama model, additional space for your data
+## Getting Started
 
-## Installation
-
-### Step 1: Set up Project Directory
-Create a folder named `llama2_project` and download the llama2 model into it. The model can be downloaded from the provided link in the original guide.
-
-### Step 2: Install Necessary Packages
-Create a file named `requirements.txt` and list the following libraries in it:
-
-```plaintext
-pypdf
-langchain
-torch
-accelerate
-bitsandbytes
-transformers
-sentence_transformers
-faiss_cpu
-chainlit
-ctransformers
-flask
+### 1. Clone the Repository
+Start by cloning the repository from GitHub to have a local copy on your machine:
+```sh
+git clone https://github.com/mrodgers/Save_the_Llama_for_your_Mama.git
 ```
 
-Install the packages using the following command:
+### 2. Install Dependencies
+Navigate to the project directory and install the necessary dependencies using:
 ```sh
 pip install -r requirements.txt
 ```
 
-## Data Processing and Web Application Setup
-In this step, we will set up a Flask web application to handle file uploads and data processing. The application utilizes several modules from the langchain package for data processing.
+## Starting the Services
 
-Here is a breakdown of the Flask application code structure:
-
-### File Upload and Data Processing Script
-Save the following code to a file named `fileupload.py`. This script configures a Flask web application with routes to facilitate PDF file uploads and initiate data processing to create a vector database.
-
-```python
-# Few parts harvested from a blog post on Medium, thank you to...
-# ...[the rest of your code here]...
+### Chainlit Server
+To start the Chainlit server which hosts the chatbot, navigate to the project directory and use the following command:
+```sh
+chainlit run deploy.py -w
 ```
+You can access the chatbot by visiting `localhost:8000` in your browser.
 
-### Running the Flask Application
-Navigate to the directory containing the `fileupload.py` file in the terminal and initiate the Flask server with the command:
-
+### Upload Server
+Initiate the file upload server by running the following command in the project directory:
 ```sh
 python fileupload.py
 ```
+The server will start at `http://0.0.0.0:5000`, allowing you to upload and process PDF files seamlessly.
 
-The application will start and be accessible at `http://0.0.0.0:5000`. You can upload PDF files via the upload route and initiate data processing through the process route.
+## Engage with CopyBot
+Interact with your files like never before. Simply upload your files and start chatting to retrieve information with source references.
 
-## Deploying the Model
-[...the rest of the instructions here...]
-
-## Contributors
-- Eduardo Alvarez (Title Rectification)
-- AI Anytime (Video Tutorial)
-
-## Additional Resources
-For a detailed walkthrough and further explanations, refer to the AI Anytime video tutorial mentioned in the main guide.
-
-## License
-[Specify the License type here, if any]
-
-## Contact
-[Your Contact Information Here]
-```
-
-Make sure to complete the section labeled "[...the rest of the instructions here...]" with further instructions on deploying the model, as present in your original guide.
+_Thank you for choosing CopyBot, where your files are just a chat away!_
